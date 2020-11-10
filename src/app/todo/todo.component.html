@@ -1,0 +1,63 @@
+<main class="main">
+  <section class="todos-container">
+    <div class="title-container">
+      <h1>TO-DO List</h1>
+      <p>A place to store your todos.</p>
+    </div>
+    <div class="task-form-container">
+      <form #taskForm="ngForm" (ngSubmit)="addTask(taskForm)">
+        <div class="new-task-form">
+          <!-- <p>Add a new task</p> -->
+          <label for="task">Add a new task</label>
+          <input
+            type="text"
+            name="task"
+            id="task"
+            placeholder="Enter new task here"
+            class="task-form-input"
+            ngModel
+          />
+          <button class="submit-button">Submit</button>
+        </div>
+      </form>
+      <form
+        #searchForm="ngForm"
+        (input)="setTaskSearchTerm(searchForm)"
+        class="search-form"
+      >
+        <label for="searchTerm">Search for a task</label>
+        <input
+          type="text"
+          name="searchTerm"
+          id="searchTerm"
+          class="task-form-input"
+          ngModel
+        />
+      </form>
+    </div>
+    <ol>
+      <!-- *="" all structural directives will follow this format -->
+      <!-- []=" all attribute directives will follow this format" -->
+      <li *ngFor="let todo of filterTasks(); index as i">
+        <div class="task-container">
+          <div class="task-start">
+            <button
+              class="complete-button"
+              *ngIf="!todo.completed"
+              (click)="completeTask(i)"
+            >
+              Complete
+            </button>
+            <p [ngClass]="{ strikethrough: todo.completed }">{{ todo.task }}</p>
+          </div>
+          <!-- End of button and task container-->
+
+          <button class="delete-button" (click)="removeTask('task', i)">
+            Delete Task
+          </button>
+        </div>
+        <!-- End of .task-container -->
+      </li>
+    </ol>
+  </section>
+</main>
